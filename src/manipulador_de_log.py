@@ -5,3 +5,4 @@ class ManipuladorDeLog(ABC):
     @abstractmethod
     def log(msg):
         raise NotImplementedError
+   
