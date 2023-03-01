@@ -1,31 +1,30 @@
-from src.manipulador_de_log import ManipuladorDeLog
+from datetime import datetime
 
 
-class Log(ManipuladorDeLog):
+class Log():
 
-    def __init__(self, log: set):
-        self.__manipuladores = log
+    def __init__(self, log: list):
+        self.__manipuladores = set(log)
 
-    def log(self, msg):
-        return super().log(self)
-
-    def adicionar_manipulador(self, msg):
-        self.__manipuladores
+    def adicionar_manipulador(self, log):
+        self.__manipuladores.add(log)
 
     def info(self, msg):
-        self.log("INFO")
+        self.__log("INFO", msg)
 
     def alerta(self, msg):
-        self.log("ALERTA")
+        self.__log("ALERTA", msg)
 
     def erro(self, msg):
-        self.log("ERRO")
+        self.__log("ERRO", msg)
 
     def debug(self, msg):
-        self.log("DEBUG")
+        self.__log("DEBUG", msg)
 
-    def __log(self):
-        self.log("DEBUG")
+    def __log(self, type, msg):
+        for manipulador in self.__manipuladores:
+            manipulador.log(self.__formatar(type, msg))
 
-    def __formatar(self):
-        self.log = ZeroDivisionError
+    def __formatar(self, type, msg):
+        info = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+        return f'[{type} - {info}]: {msg}'
